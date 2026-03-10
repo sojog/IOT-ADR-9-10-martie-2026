@@ -1,0 +1,100 @@
+{
+  "name": "Gluma_tradusa",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        -144
+      ],
+      "id": "e8b6401f-1993-4468-9c6a-c87d0609c810",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://v2.jokeapi.dev/joke/Programming?type=twopart",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -160,
+        -144
+      ],
+      "id": "1e0f024c-1836-4705-8d49-fbec3930cb3e",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "qwen2.5-coder:14b",
+          "mode": "list",
+          "cachedResultName": "qwen2.5-coder:14b"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Tradu gluma asta in limba romana\nSetup: {{ $json.setup }}\nDelivery: {{ $json.delivery }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.ollama",
+      "typeVersion": 1,
+      "position": [
+        96,
+        -144
+      ],
+      "id": "b88a0b90-b3bb-4558-a8fc-0e3f74c5c0bb",
+      "name": "Message a model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "Vht4Ihz5bUZYkxfX",
+          "name": "Ollama account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "f3be09af-fbbc-41ab-997f-559121fc62a2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "70aebc6f8bfe26487bd4c192fead3cf1f07283d443800b1025574cf2a11b71c3"
+  },
+  "id": "5GzVikXPlz5ESy8g",
+  "tags": []
+}
